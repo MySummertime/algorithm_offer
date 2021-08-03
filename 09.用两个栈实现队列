@@ -1,0 +1,25 @@
+using number[] to simulate queue
+
+1. create 2 auxilliary stack, s1 is to store enqueue elements, s2 is to store dequeue delements;
+2. if s2.length == 0, pop all the elements in s1 one by one, push them into s2, and return s2.top(), do s2.pop();
+
+class cQueue{
+    private s1: number[];
+    private s2: number[];
+
+    constructor(){}
+
+    appendTail(value: number): void{
+        this.s1.push(value);
+    }
+    deleteHead(): number{
+        if(this.s2.length === 0){
+            while(this.s1.length > 0){
+                let tmp: number = this.s1.pop();
+                this.s2.push(tmp);
+            }
+        }
+        return this.s2.length ? this.s2.pop() : -1;
+    }
+    
+}
