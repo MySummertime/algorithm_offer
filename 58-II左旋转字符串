@@ -1,0 +1,24 @@
+1. iterate the string, concatenate 2 substrings
+
+  1. do iterate from the beginning of the string to index n, so we get the right half of string;
+  2. do iterate from index n to the end of the string, so we get the left half of string;
+  3. using "+" to concatenate the 2 substrings, so we get the return value;
+  
+function reverseLeftWords(s: string, n: number): string{
+    let l: string = "";     //左半边字符串
+    let r: string = "";     //右半边字符串
+    for(let c of s){
+        n-- > 0 ? r += c : l += c
+    }
+    return l + r;
+};
+
+
+2. slice the string, concatenate 2 substrings
+
+  1. slice(start, end): iterate from index start to index end, so we get the substring within [start, end);
+  2. slice(start): iterate from index start to the end of the string, so we get the substring within [start, end);
+  
+function reverseLeftWords(s: string, n: number): string{
+  return s.slice(n) + s.slice(0, start);
+};
