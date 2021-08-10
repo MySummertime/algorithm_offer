@@ -1,24 +1,13 @@
-using recursive algorithm
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
- 
-class Solution {
-public:
-    TreeNode* mirrorTree(TreeNode* root) {
-        if(root == nullptr){
-          return nullptr;
-        }
-        auto tmp = root->left;
-        root->left = mirrorTree(root->right);
-        root->right = mirrorTree(tmp);
-        return root;
-    }
-};
+class Solution:
+    def mirrorTree(self, root: TreeNode) -> TreeNode:
+        if not root:
+            return
+        root.left, root.right = self.mirrorTree(root.right), self.mirrorTree(root.left)
+        return root
