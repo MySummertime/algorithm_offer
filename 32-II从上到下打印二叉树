@@ -1,0 +1,41 @@
+traverse by layer using BFS
+
+  1. special case
+    the tree is empty, so that we return an empty list []
+  2. initialization of data structure
+    1. result list: ans, initialization: ans = []
+    2. auxiliary queue: que = collections.deque(), stores every node in the tree, initialization: que.append(root)
+    3. auxiliary list: tmp, stores every node within each layer, initialization: tmp = []
+  3. BFS traversal, the number of circles is the number of nodes in each layer, len(que)
+    1. in the beginning of the traversal, we enqueue child nodes: node = que.append()
+    2. we use auxiliary list to store nodes'value that were dequeued: tmp.append(node.val)
+    3. after we find the node has its child, no matter left or right, we enqueue its child(s): que.append(node.left) ||(&&) que.append(node.right)
+    4. every nodes in this layer enter the result list: ans.append(tmp)
+    5. after traversing each nodes in tree, we return result list: return ans
+    
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+import collections
+
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+        ans, que = [], collections.deque()
+        que.append(root)
+        while que:
+            tmp = []
+            for _ in range(len(que)):
+                node = que.popleft()
+                tmp.append(node.val)
+                if node.left:
+                    que.append(node.left)
+                if node.right:
+                    que.append(node.right)
+            ans.append(tmp)
+        return ans
