@@ -1,0 +1,25 @@
+DFS + recursion + post-order traversal
+
+  1. we need to traverse each node in the tree;
+  2. we use DFS recursive method to traverse the tree in post-order;
+  3. end condition: root == nullptr;
+  4. recursive formula: dfs(root->left); dfs(root->right); so that we gain the deepth of the left subtree, and the deepth of the right subtree;
+  5. return value: max(dfs(root->left), dfs(root->right)) + 1;
+  
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        if(!root) return 0;
+        return max(maxDepth(root->left), maxDepth(root->right)) + 1;
+    }
+};
