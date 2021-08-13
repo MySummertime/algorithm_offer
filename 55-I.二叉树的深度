@@ -1,0 +1,30 @@
+BFS + a queue simulated by a list
+
+  1. traverse the tree layer by layer (we could return 0 once we find the root is null);
+  2. end condition of traversal: que = null, it means we've traversed all the nodes;
+  3. auxiliary list tmp[]: to store every nodes within 1 layer, we should clear it every time a layer of traversal is completed;
+  4. auxiliary list que[]: to store every nodes within tmp, it could show whether all the nodes are traversed;
+  5. return value ans: ans = 0, and we do "ans += 1" every time a layer of nodes are copied into que;
+  
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        ans, que = 0, [root]    #结果变量ans，辅助队列que：存储一层的节点
+        while que:
+            tmp = []    #辅助队列tmp：存储本层所有节点在下一层的子节点
+            for node in que:
+                if node.left:
+                    tmp.append(node.left)
+                if node.right:
+                    tmp.append(node.right)
+            que = tmp
+            ans += 1
+        return ans
