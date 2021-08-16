@@ -1,0 +1,38 @@
+bfs + post-order traversal
+
+  1. traverse the tree by post order(from bottom up), so that each node would just be traversed once;
+  2. if we traverse the tree by in order(from top down), each node's height would be calculated twice, it wastes time;
+  3. there are 2 conditions to judge a tree is balanced or not:
+    1. if a sub-tree is a balance tree, its height must be >= 0;
+    2. if a sub-tree isn't balanced, its height must be = -1;
+  4. if a sub-tree isn't balanced, the binary tree must be unbalanced;
+  5. if a tree is balanced, its height would be =  max(left, right) + 1;
+  
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 
+class Solution {
+public:
+    bool isBalanced(TreeNode* root) {
+        return bfs(root) >= 0;
+    }
+
+    int bfs(TreeNode* node) {
+        if (node == nullptr) {
+            return 0;
+        }
+        int l_height = bfs(node->left);
+        int r_height = bfs(node->right);
+        if (l_height == -1 || r_height == -1 || abs(l_height - r_height) > 1) {
+            return -1;
+        }
+        return max(l_height, r_height) + 1;
+    }
+};
