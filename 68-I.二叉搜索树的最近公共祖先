@@ -1,0 +1,36 @@
+traversal from top down, just one time
+
+  1. with the help of while (true) {} statement, we do traverse at unknown times, until the exit condition is treggered;
+  2. use the properties of binary search tree, we do determination within the while loop:
+    1. root->left->val < root->val < root->right->val;
+    2. p->val (or q->val) < ancestor->val < q->val (or p->val);
+    3. once we find the ancestor, we use break statement to end the loop;
+    
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        TreeNode* ancestor = root;
+        while (true) {
+            if (p->val < ancestor->val && q->val < ancestor->val) {
+                ancestor = ancestor->left;
+            }
+            else if (p->val > ancestor->val && q->val > ancestor->val) {
+                ancestor = ancestor->right;
+            }
+            else {
+                break;
+            }
+        }
+        return ancestor;
+    }
+};
