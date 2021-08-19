@@ -1,0 +1,10 @@
+1. do the simplest loop
+
+when we don't need to consider the overflow caused by large integer, we do the simplest loop;
+
+class Solution:
+    def printNumbers(self, n: int) -> List[int]:
+        res = []
+        for i in range(1, 10 ** n):
+            res.append(i)
+        return res
