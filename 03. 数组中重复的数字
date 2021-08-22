@@ -1,0 +1,21 @@
+traverse + swap positions in place
+
+the code is clear, so we don't need to explain it there;
+
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        int i = 0;
+        while (i < nums.size()) {
+          if (i == nums[i]) {
+            ++i;
+            continue;
+          }
+          if (nums[i] == nums[nums[i]]) {
+            return nums[i];
+          }
+          swap(nums[i], nums[nums[i]]);
+        }
+        return -1;
+    }
+};
