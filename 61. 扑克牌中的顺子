@@ -1,0 +1,23 @@
+sort + traverse
+
+  1. at first, we sort the array;
+  2. and then, we traverse the array, and use judge statement;
+  
+
+class Solution{
+public:
+  bool isStraight(vector<int>& nums) {
+    int zero = 0;
+    int len = nums.size() - 1;
+    for (int i = 0; i < len + 1; ++i) {
+      if (nums[i] == 0) {
+        ++zero;
+        continue;
+      }
+      if (i != 0 && nums[i] == nums[i - 1]) {
+        return false;
+      }
+    }
+    return nums[len] - nums[zero] < 5;  //nums[zero] equals to "the first element that behind the possible zero int the array"
+  }
+};
