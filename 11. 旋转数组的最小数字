@@ -1,0 +1,28 @@
+traverse using dichotomy
+
+the code is clear, so we don't need to explain it here;
+
+
+/**
+ * @param {number[]} numbers
+ * @return {number}
+ */
+ 
+var minArray = function(numbers) {
+    let l = 0;
+    let r = numbers.length - 1;
+
+    while (l < r) {
+        let m = l + Math.floor((r - l) / 2);    //保证恒有 l <= m < r
+        if (numbers[m] < numbers[r]) {
+            r = m;
+        }
+        else if (numbers[m] > numbers[r]) {
+            l = m + 1;
+        }
+        else {
+            r--;
+        }
+    }
+    return numbers[l];
+};
