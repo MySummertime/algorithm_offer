@@ -1,0 +1,19 @@
+create RegExp to match each char of string s, and using .length to determine the frequency of each char
+
+  1. use new RegExp() to create a mathing function, we do global matching by "g" here;
+  2. use .length method to help determining the frequency of each char;
+  
+
+/**
+ * @param {string} s
+ * @return {character}
+ */
+ 
+ var firstUniqChar = function(s) {
+    for (let ch of new Set(s)) {
+        if (s.match(new RegExp(ch, "g")).length === 1) {
+            return ch;
+        }
+    }
+    return ' ';
+};
