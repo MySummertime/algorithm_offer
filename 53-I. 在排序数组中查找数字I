@@ -1,0 +1,53 @@
+binary search, traverse, border condition
+
+  1. traverse the array twice, using binary search to find the left border & right border of same elements;
+  2. pay attention to the border condition while using binary search;
+  
+class Solution {
+public:
+
+    int search(vector<int>& nums, int target) {
+        if (nums.size() == 0) {
+            return 0;
+        }
+        int a = -1;
+        int b = -1;
+
+        //二分找出左边界...do binary search to find the left border
+        int l = 0;
+        int r = nums.size() - 1;
+        while (l < r) {
+            int m = l + r >> 1;
+            if (nums[m] >= target) {
+                r = m;
+            }
+            else {
+                l = m + 1;
+            }
+        }
+        if (nums[r] != target) {
+            return 0;
+        }
+        a = r;
+
+        //二分找出右边界...using binary search to find the right border
+        l = 0;
+        r = nums.size() - 1;
+        while (l < r) {
+            int m = l + r + 1 >> 1;
+            if (nums[m] <= target) {
+                l = m;
+            }
+            else {
+                r = m - 1;
+            }
+        }
+        if (nums[r] != target) {
+            return 0;
+        }
+        b = r;
+
+        return b - a + 1;
+    }
+    
+};
