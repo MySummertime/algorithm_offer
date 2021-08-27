@@ -1,0 +1,22 @@
+use bineary search while traverse the array
+
+  1. when we need to search in an ordered array, we use binary search usually;
+
+
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int l = 0;
+        int r = nums.size() - 1;
+        while (l <= r) {
+            int m = l + r >> 1;
+            if (nums[m] == m) {
+                l = m + 1;
+            }
+            else {
+                r = m - 1;
+            }
+        }
+        return l;
+    }
+};
