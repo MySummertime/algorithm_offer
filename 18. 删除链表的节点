@@ -1,0 +1,36 @@
+use dummy node, time: O(n), space: O(1)
+
+  Tree principles to solve the list problem:
+  
+  1. use dummy node which points to the head would make it easier to operate the head;
+  2. cur = dum; means that cur points to the current node;
+  3. cur = cur->next; means that we traverse the list;
+  
+  
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ 
+class Solution {
+public:
+    ListNode* deleteNode(ListNode* head, int val) {
+        ListNode* dum = new ListNode(-1);
+        dum->next = head;
+        ListNode* cur = dum;
+
+        while (cur->next != nullptr && cur != nullptr) {
+            if (cur->next->val == val) {
+                cur->next = cur->next->next;
+                break;
+            }
+            cur = cur->next;
+        }
+
+        return dum->next;
+    }
+};
