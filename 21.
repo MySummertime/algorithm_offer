@@ -1,0 +1,33 @@
+traverse the vector once using double pointers
+time: O(n); space: O(1)
+
+  1. initialize 2 pointers: l = 0; r = nums.size() - 1;
+  2. we make the pointer l point to even elements, and the pointer r point to odd elements;
+  3. nums[l] & 1 == 1: it means that nums[l] is odd, we should do ++l;
+     nums[r] & 1 == 0: it means that nums[r] is even, we should do --r;
+  4. when l == r, the traversion is finished, we should quit the loop, and return the reverted vector;
+
+
+class Solution {
+public:
+    vector<int> exchange(vector<int>& nums) {
+        int l = 0;
+        int r = nums.size() - 1;
+        while (l < r) {
+            if (nums[l] & 1) {
+                ++l;
+            }
+            else if (nums[r] % 2 == 0) {    //when nums[r] & 1 == 0: it fails, why?
+                --r;
+            }
+            else {
+                int tmp = nums[l];
+                nums[l] = nums[r];
+                nums[r] = tmp;
+                ++l;
+                --r;
+            }
+        }
+        return nums;
+    }
+};
