@@ -1,0 +1,33 @@
+using double pointers to traverse the list
+
+  1. we need to move (n - k) steps to reach the kth node from tail to head;
+  2. the former pointer moves k steps first, after that, we move the former till it reaches the end(nullptr), so the latter pointer could move (n - k) steps;
+  
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ 
+class Solution {
+public:
+    ListNode* getKthFromEnd(ListNode* head, int k) {
+        if (!head || k <= 0) {
+            return nullptr;
+        }
+        //双指针
+        ListNode* former = head;
+        ListNode* latter = head;
+        for (int i = 0; i < k; ++i) {
+            former = former->next;
+        }
+        while (former) {    //移动 n - k 次，即为倒数第 k 个节点
+            former = former->next;
+            latter = latter->next;
+        }
+        return latter;
+    }
+};
