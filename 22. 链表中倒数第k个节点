@@ -1,0 +1,32 @@
+traverse the list using double pointers
+
+  1. the former pointer starts from the head, pauses until it reaches the kth node;
+  2. the latter pointer starts from the head when the former reaches the kth node, ends until the former reaches the end of the list;
+  
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+ 
+/**
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode}
+ */
+ 
+ const getKthFromEnd = function(head, k) {
+    let former = head;
+    let latter = head;
+    while (k--) {
+        former = former.next;
+    }
+    while (former) {
+        former = former.next;
+        latter = latter.next;
+    }
+    return latter;
+};
