@@ -1,0 +1,46 @@
+traverse double lists, using dummy node to help
+
+  1. start traversing from dummy node, make sure that cur starts from dummy node;
+  2. when reaches a less mode, we make sure that cur.next = the less node, cur = cur.next;
+  3. continue traversing, until one of the cur.next == null, which means one of the lists is thoroughly traversed;
+  4. the other list which isn't traversed thoroughly could be spliced to cur.next directly;
+  
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+ 
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+*/
+
+var mergeTwoLists = function(l1, l2) {
+    if (!l1) {
+        return l2;
+    }
+    else if (!l2) {
+        return l1;
+    }
+    let dum = new ListNode(-1); //哑节点
+    let cur = dum;
+    while (l1 !== null && l2 !== null) {
+        if (l1.val <= l2.val) {
+            cur.next = l1;
+            l1 = l1.next;
+        }
+        else {
+            cur.next = l2;
+            l2 = l2.next;
+        }
+        cur = cur.next;
+    }
+    cur.next = l1 == null ? l2 : l1;
+    return dum.next;
+
+};
