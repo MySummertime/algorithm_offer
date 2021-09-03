@@ -1,0 +1,34 @@
+traverse each of the lists one time, using unordered_set to store nodes
+
+  1. traverse one of the lists thoroughly using unordered_set to store every nodes, and then traverse the other list until we find the first same node, so the time is: O(m + n);
+  2. use unordered_set to store every nodes within one lists, so the space is: O(m);
+  
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode* a, ListNode* b) {
+        unordered_set<ListNode* > s;
+        ListNode* cur = a;
+        while (cur) {
+            s.insert(cur);
+            cur = cur->next;
+        }
+        cur = b;
+        while (cur) {
+            if (s.find(cur) != s.end()) {
+                return cur;
+            }
+            cur = cur->next;
+        }
+        return nullptr;
+    }
+};
