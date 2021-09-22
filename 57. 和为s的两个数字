@@ -1,1 +1,26 @@
+use unordered_set to store help store & search the integer value
 
+  1. store the right elements in the array while traversing the array(this is important);
+  2. we use 2 elements at the same time, one is the current int within array, the other is the division of target and current int(we search for it in the array);
+     if we store all of the elements in the array, we could find the wrong answer when the current int within array equals to the other int we search for,
+     because when the two int are the same, it may fit the equation, but it violates the condition that we should return 2 elements;
+     
+     
+  class Solution {
+  public:
+      unordered_set<int> s;
+      vector<int> twoSum(vector<int>& nums, int target) {
+          for (int i = 0; i < nums.size(); ++i) {
+              int ans = target - nums[i];
+              if (ans < 0) {
+                  return vector<int> ();
+              }
+              if (s.count(ans) != 0) {
+                  return vector<int> {nums[i], ans};
+              }
+              s.insert(nums[i]);
+          }
+          return vector<int> ();
+      }
+      
+  };
