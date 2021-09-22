@@ -1,21 +1,42 @@
-traverse + swap positions in place
+1. we construct an auxiliary array, determine whether an element had already existed while traversing the array
 
-the code is clear, so we don't need to explain it there;
-
-class Solution {
-public:
-    int findRepeatNumber(vector<int>& nums) {
-        int i = 0;
-        while (i < nums.size()) {
-          if (i == nums[i]) {
-            ++i;
-            continue;
-          }
-          if (nums[i] == nums[nums[i]]) {
-            return nums[i];
-          }
-          swap(nums[i], nums[nums[i]]);
+    the code is clear, so we don't need to explain it there as well;
+    
+    
+    /**
+     * @param {number[]} nums
+     * @return {number}
+    **/
+    var findRepeatNumber = function(nums) {
+        let map = {};
+        for (let i of nums) {
+            if (map[i]) {
+                return i;
+            }
+            map[i] = 1;
         }
         return -1;
-    }
-};
+
+    };
+
+
+2. we swap the position of elements which is unordered in place so that we don't need to apply extra place to help store int elements;
+
+    the code is just like the one in C++, super clean and super simple as well;
+    
+    
+    /**
+     * @param {number[]} nums
+     * @return {number}
+    **/
+    var findRepeatNumber = function(nums) {
+        const len = nums.length;
+        for (let i = 0; i < len; ++i) {
+            while (nums[i] !== i) {
+                if (nums[i] === nums[nums[i]]) {
+                    return nums[i];
+                }
+                [nums[i], nums[nums[i]]] = [nums[nums[i]], nums[i]];
+            }
+        }
+    };
