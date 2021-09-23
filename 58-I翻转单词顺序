@@ -1,0 +1,37 @@
+there are 2 module solutions for string
+  
+  1. when we deal with string with blank spaces, we have to determine whether the string is empty before we push/pop the sub-string;
+  2. when we deal with stirng without blank spaces, we don't have ot determine whether the string is empty before we make an option;
+  
+  because the original string has blank spaces which couldn't be ignored, so we add an blank spaces in the end of string to complete the seperate symbol system;
+  
+  
+  class Solution {
+  public:
+    string reverseWords(string s) {
+      if (s.empty()) {
+        return "";
+      }
+      vector<string> vec;
+      string tmp = "";
+      s += ' ';
+      for (char i : s) {
+        if (i != ' ') {
+          tmp += i;
+        }
+        else {
+          if (!tmp.empty()) {
+            vec.push_back(tmp);
+            tmp.clear();
+          }
+      }
+      s.clear();
+      reverse(vec.begin(), vec.end());
+      for (auto& i : vec) {
+        s += i + ' ';
+      }
+      s.pop_back();
+      return s;
+     }
+     
+  };
