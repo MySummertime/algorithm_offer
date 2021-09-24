@@ -1,1 +1,21 @@
+use bit operation to count the amount of binary 1
 
+  
+  1. depending on the feature that (n & (n - 1)) could offset the lowest 1, we could know the amount of binary 1 while do the operate untile the original number equals 0;
+  
+  class Solution:
+    def hammingWeight(self, n: int) -> int:
+        cnt = 0
+        while n != 0:
+            cnt += (n & 1)
+            n >>= 1
+        return cnt
+        
+  2. compare each bit to binary 1, while traversing the 32-bit number bit by bit;
+  
+  class Solution:
+    def hammingWeight(self, n: int) -> int:
+      cnt = 0
+      for i in range(32):
+        cnt += (1 << i) & n
+      return cnt
