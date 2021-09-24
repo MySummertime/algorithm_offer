@@ -1,0 +1,17 @@
+when all of the binary 1 has been counted, the original int number equals to 0;
+so we get the amount of binary 1 by using the feature that n & (n - 1) could offset the lowest binary 1;
+
+
+/**
+ * @param {number} n - a positive integer
+ * @return {number}
+*/
+
+var hammingWeight = function(n) {
+    let cnt = 0;
+    while (n) {
+        n &= n - 1;
+        ++cnt;
+    }
+    return cnt;
+};
