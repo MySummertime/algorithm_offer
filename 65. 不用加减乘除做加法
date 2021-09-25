@@ -1,0 +1,11 @@
+As we all know that (a + b) == (a ^ b) + ((a & b) << 1), we use this feature to complete the bit operation;
+
+  We use recursive method there, but the iterative method is good too;
+  
+  
+  class Solution {
+  public:
+      int add(int a, int b) {
+          return b == 0 ? a : add(a ^ b, (a & b) << 1);
+      }
+  };
