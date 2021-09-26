@@ -1,0 +1,26 @@
+using Moore Voting megthod;
+
+  the code is clear, so we read it, and we get it;
+  
+  
+  class Solution {
+  public:
+      int majorityElement(vector<int>& nums) {
+          unordered_map<int, int> map;
+          int ans = nums[0];
+          int cnt = 1;
+          for (int i = 1; i < nums.size(); ++i) {
+              if (cnt == 0) {     //之前的元素都抵消了，重新开始赋值
+                  ++cnt;
+                  ans = nums[i];
+              }
+              else if (ans == nums[i]) {  //元素值相等，继续计数
+                  ++cnt;
+              }
+              else {  //不相等，消掉一个
+                  --cnt;
+              }
+          }
+          return ans;
+      }
+  };
