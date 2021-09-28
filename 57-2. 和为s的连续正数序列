@@ -1,0 +1,32 @@
+we use double pointer to construct sliding window, and then traverse the int array;
+
+
+class Solution {
+public:
+    vector<vector<int>> findContinuousSequence(int target) {
+        int l = 1;  //左指针
+        int r = 2;  //右指针
+        int sum = 1 + 2;  //左开右闭区间内的连续元素之和
+        vector<vector<int>> vec;  //结果数组vec：存储连续元素
+        while(l < r){
+            if(sum == target){
+                vector<int> tmp;  //临时数组tmp：存储即将进结果数组的元素
+                for(int i = l; i <= r; i++){
+                    tmp.emplace_back(i);
+                }
+                vec.emplace_back(tmp);
+            }
+            if(sum >= target){
+                sum -= l;
+                ++l;
+            }
+            else{
+                ++r;
+                sum += r;
+            }
+        }
+        
+        return vec;
+    }
+    
+};
