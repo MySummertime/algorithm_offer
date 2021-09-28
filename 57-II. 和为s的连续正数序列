@@ -1,1 +1,35 @@
+use double pointers to construct sliding window, then we traverse the continuous int array;
 
+
+/**
+ * @param {number} target
+ * @return {number[][]}
+**/
+
+var findContinuousSequence = function(target) {
+    let ans = [];
+    let l = 1;
+    let r = 1;
+    let sum = 0;
+    while (l < target >> 1) {
+        if (sum < target) {
+            sum += r;
+            ++r;
+        }
+        else if (sum > target) {
+            sum -= l;
+            ++l;
+        }
+        else {
+            let sub_arr = [];
+            for (let i = l; i < r; ++i) {
+                sub_arr.push(i);
+            }
+            ans.push(sub_arr);
+            sum -= l;
+            ++l;
+        }
+    }
+
+    return ans;
+};
