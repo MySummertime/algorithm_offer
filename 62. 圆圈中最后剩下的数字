@@ -1,0 +1,18 @@
+abstract the prime function, analyze the prime function body, so it goes;
+
+
+class Solution {
+public:
+    int lastRemaining(int n, int m) {
+        return find(n, m);
+    }
+
+    int find(int n, int m) {
+        if (n == 1) {
+            return 0;
+        }
+        int ans = find(n - 1, m);
+        return (m + ans) % n;
+    }
+
+};
