@@ -1,0 +1,27 @@
+use linear method to accelerate the search
+
+
+  class Solution {
+  public:
+      bool findNumberIn2DArray(vector<vector<int>>& matrix, int target) {
+          if (!matrix.size() || !matrix[0].size()) {
+              return false;
+          }
+          int rowsCnt = matrix.size();
+          int colsCnt = matrix[0].size();
+          int r = 0; int c = colsCnt - 1;
+          while (r >= 0 && r < rowsCnt && c >= 0 && c < colsCnt) {
+              int cur = matrix[r][c];
+              if (cur == target) {
+                  return true;
+              }
+              else if (cur > target) {
+                  --c;
+              }
+              else {
+                  ++r;
+              }
+          }
+          return false;
+      }
+  };
