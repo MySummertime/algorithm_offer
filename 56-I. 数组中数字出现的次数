@@ -1,0 +1,22 @@
+use bit operation
+
+
+  function singleNumbers(nums: number[]): number[] {
+      let xorVal: number = 0;
+      nums.forEach(num => (xorVal ^= num));
+      let base: number = 1;
+      while (!(base & xorVal)) {
+          base <<= 1;
+      }
+      let l: number = 0;
+      let r: number = 0;
+      nums.forEach(num => {
+          if (base & num) {
+              l ^= num;
+          }
+          else {
+              r ^= num;
+          }
+      })
+      return [l, r];
+  };
