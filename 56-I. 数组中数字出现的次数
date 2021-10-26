@@ -1,0 +1,28 @@
+use bit operation
+
+
+  class Solution {
+  public:
+      vector<int> singleNumbers(vector<int>& nums) {
+          int xorVal = 0;
+          for (int num : nums) {
+              xorVal ^= num;
+          }
+
+          int base = 1;
+          while (!(base & xorVal)) {
+              base <<= 1;
+          }
+
+          int l = 0; int r = 0;
+          for (int n : nums) {
+              if (base & n) {
+                  l ^= n;
+              }
+              else {
+                  r ^= n;
+              }
+          }
+          return vector<int> {l, r};
+      }
+  };
