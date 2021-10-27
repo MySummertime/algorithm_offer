@@ -1,0 +1,14 @@
+use Finite-State Machine & bit operation to make sure the O(1) time
+
+
+  class Solution {
+  public:
+      int singleNumber(vector<int>& nums) {
+          int h = 0; int l = 0;
+          for (int num : nums) {
+              h = (num ^ h) & (~l);
+              l = (num ^ l) & (~h);
+          }
+          return h;
+      }
+  };
