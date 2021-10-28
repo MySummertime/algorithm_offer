@@ -1,4 +1,4 @@
-1. use a priority_queue to represent the sliding window;
+1. use a priority_queue to construct the sliding window;
 
 
   class Solution {
@@ -20,6 +20,36 @@
               }
               ans.emplace_back(que.top().first);
           }
+          return ans;
+      }
+  };
+
+
+
+2. use a deque to construct the sliding queue;
+
+  class Solution {
+  public:
+      vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+          if (nums.empty() || k > nums.size() || k <= 0) {
+              return {};
+          }
+          vector<int> ans;
+          deque<int> deq;
+
+          for (int i = 0; i < nums.size(); ++i) {
+              if (!deq.empty() && i >= k) {
+                  ans.push_back(nums[deq.front()]);
+              }
+              while (!deq.empty() && nums[i] >= nums[deq.back()]) {
+                  deq.pop_back();
+              }
+              if (!deq.empty() && i - deq.front() >= k) {
+                  deq.pop_front();
+              }
+              deq.push_back(i);
+          }
+          ans.push_back(nums[deq.front()]);
           return ans;
       }
   };
