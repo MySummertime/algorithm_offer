@@ -1,0 +1,50 @@
+use 2 array to construct the auxiliary structure
+
+  1. one of the arrays helps simulate the queue which stores the max of all;
+  2. another array helps simulate the queue which stores all;
+  
+  
+  /**
+   * Your MaxQueue object will be instantiated and called as such:
+   * var obj = new MaxQueue()
+   * var param_1 = obj.max_value()
+   * obj.push_back(value)
+   * var param_3 = obj.pop_front()
+   */
+  var MaxQueue = function() {
+      this.deq = [];   //simulate a queue stored max of all
+      this.que = [];   //simulate a queue stored all
+      this.errFlag = -1;
+  };
+
+  /**
+   * @return {number}
+   */
+  MaxQueue.prototype.max_value = function() {
+      return this.deq.length ? this.deq[0] : this.errFlag;
+  };
+
+  /** 
+   * @param {number} value
+   * @return {void}
+   */
+  MaxQueue.prototype.push_back = function(value) {
+      while (this.deq.length && this.deq[this.deq.length - 1] < value) {
+          this.deq.pop();
+      }
+      this.deq.push(value);
+      this.que.push(value);
+  };
+
+  /**
+   * @return {number}
+   */
+  MaxQueue.prototype.pop_front = function() {
+      if (!this.que.length) {
+          return this.errFlag;
+      }
+      if (this.deq[0] === this.que[0]) {
+          this.deq.shift();
+      }
+      return this.que.shift();
+  };
