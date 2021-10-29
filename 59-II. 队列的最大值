@@ -1,0 +1,49 @@
+use a deque & a queue to construct the auxiliary structure
+
+  1. the deque helps simulate the queue which stores the max of all;
+  2. the queue helps simulate the queue which stores all;
+  
+
+  /**
+   * Your MaxQueue object will be instantiated and called as such:
+   * MaxQueue* obj = new MaxQueue();
+   * int param_1 = obj->max_value();
+   * obj->push_back(value);
+   * int param_3 = obj->pop_front();
+   */
+  class MaxQueue {
+  public:
+      MaxQueue() {}
+
+      int max_value() {
+          if (deq.empty()) {
+              return errFlag;
+          }
+          return deq.front();
+      }
+
+      void push_back(int value) {
+          while (!deq.empty() && deq.back() < value) {
+              deq.pop_back();
+          }
+          deq.push_back(value);
+          que.push(value);
+      }
+
+      int pop_front() {
+          if (que.empty()) {
+              return errFlag;
+          }
+          if (que.front() == deq.front()) {
+              deq.pop_front();
+          }
+          int ans = que.front();
+          que.pop();
+          return ans;
+      }
+
+  private:
+      const short errFlag = -1;
+      queue<int> que;
+      deque<int> deq;
+  };
