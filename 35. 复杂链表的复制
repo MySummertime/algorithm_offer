@@ -1,4 +1,7 @@
-use unordered_map in hash container to simulate the list
+use unordered_map & dfs method
+
+  1. use unordered_map in hash container to simulate the list;
+  2. use dfs method to generate the same list;
 
 
   // Definition for a Node.
