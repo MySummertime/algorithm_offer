@@ -1,0 +1,126 @@
+use finite-state machine to support the transfer
+ 
+ 1. traverse the string char by char;
+ 2. give each char a sign used for state determination;
+ 3. use enum to express states of char & types of char;
+ 4. determine the state using the type of char while traversing the string;
+ 
+
+  class Solution {
+  public:
+      enum charType {
+          char_number,
+          char_exp,
+          char_point,
+          char_sign,
+          char_space,
+          char_illegal
+      };
+
+      enum charState {
+          state_initial,
+          state_int_sign,
+          state_integer,
+          state_point,
+          state_point_without_int,
+          state_fraction,
+          state_exp,
+          state_exp_sign,
+          state_exp_number,
+          state_end
+      };
+
+      charType toCharType(char ch) {
+          if (ch >= '0' && ch <= '9') {
+              return char_number;
+          }
+          else if (ch == 'e' || ch == 'E') {
+              return char_exp;
+          }
+          else if (ch == '.') {
+              return char_point;
+          }
+          else if (ch == '+' || ch == '-') {
+              return char_sign;
+          }
+          else if (ch == ' ') {
+              return char_space;
+          }
+          else {
+              return char_illegal;
+          }
+      }
+
+      bool isNumber(string s) {
+          charState ss = state_initial;
+          for (int i = 0; i < s.length(); ++i) {
+              charType st = toCharType(s[i]);
+              if (transfer[ss].find(st) == transfer[ss].end()) {
+                  return false;
+              }
+              else {
+                  ss = transfer[ss][st];
+              }
+          }
+          return ss == state_integer || ss == state_point || ss == state_fraction || ss == state_exp_number || ss == state_end;
+      }
+
+  private:
+      unordered_map<charState, unordered_map<charType, charState>> transfer {
+          {
+              state_initial, {
+                  {char_space, state_initial},
+                  {char_number, state_integer},
+                  {char_point, state_point_without_int},
+                  {char_sign, state_int_sign}
+              }
+          }, {
+              state_int_sign, {
+                  {char_number, state_integer},
+                  {char_point, state_point_without_int}
+              }
+          }, {
+              state_integer, {
+                  {char_number, state_integer},
+                  {char_exp, state_exp},
+                  {char_point, state_point},
+                  {char_space, state_end}
+              }
+          }, {
+              state_point, {
+                  {char_number, state_fraction},
+                  {char_exp, state_exp},
+                  {char_space, state_end}
+              }
+          }, {
+              state_point_without_int, {
+                  {char_number, state_fraction}
+              }
+          }, {
+              state_fraction, {
+                  {char_number, state_fraction},
+                  {char_exp, state_exp},
+                  {char_space, state_end}
+              }
+          }, {
+              state_exp, {
+                  {char_number, state_exp_number},
+                  {char_sign, state_exp_sign}
+              }
+          }, {
+              state_exp_sign, {
+                  {char_number, state_exp_number}
+              }
+          }, {
+              state_exp_number, {
+                  {char_number, state_exp_number},
+                  {char_space, state_end}
+              }
+          }, {
+              state_end, {
+                  {char_space, state_end}
+              }
+          }
+      };
+
+  };
