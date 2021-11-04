@@ -1,0 +1,58 @@
+1. using stack & vector to reverse list
+
+    1. from beginning to the end, push() node value into stack one by one;
+    2. from stack.top to stack.bottom, pop the top element of stack, and push_back() it into vector one by one;
+
+
+    /**
+     * Definition for singly-linked list.
+     * struct ListNode {
+     *     int val;
+     *     ListNode *next;
+     *     ListNode(int x) : val(x), next(NULL) {}
+     * };
+     */
+    class Solution {
+    public:
+        vector<int> reversePrint(ListNode* head) {
+            stack<int> st;
+            while(head){
+                st.push(head->val);
+                head = head->next;
+            }
+            vector<int> vec;
+            while(!st.empty()){
+                vec.push_back(st.top());
+                st.pop();
+            }
+            return vec;
+        }
+    };
+
+    2. usint recursive algorithm to reverse list
+
+        1. recursive end condition: head == nullptr;
+        2. recursive formula: head->next;
+        3. return value: head->val;
+        4. create an auxilliary vector to store return value;
+
+    class Solution{
+    public:
+        vector<int> reversePrint(ListNode* head){
+            func(head);     //call the recursing function
+            return ans;     //return the result array
+        }
+
+    private:
+        void func(ListNode* head){  //recursing function
+            if(head == nullptr){
+                return;
+            }
+            func(head->next);
+            ans.push_back(head->val);
+        }
+
+    private:
+        vector<int> ans;    //the result array
+
+    };
