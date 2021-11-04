@@ -1,0 +1,44 @@
+use 1 stack to store left children temporarily
+
+  1. we use stack to help store left children temporatily, as it could flip nodes one by one while we traverse the binary tree;
+  2. we traverse the preorder array & inorder array, and we should know when we reach a right child;
+  
+
+  /**
+   * Definition for a binary tree node.
+   * struct TreeNode {
+   *     int val;
+   *     TreeNode *left;
+   *     TreeNode *right;
+   *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+   * };
+   */
+  class Solution {
+  public:
+      TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+          if (!preorder.size()) {
+              return nullptr;
+          }
+          TreeNode* root = new TreeNode(preorder[0]);   //root of all
+          std::stack<TreeNode*> st;
+          st.push(root);
+          int j = 0;
+          for (int i = 1; i < preorder.size(); ++i) {
+              TreeNode* subRoot = st.top();
+              if (subRoot->val != inorder[j]) {
+                  subRoot->left = new TreeNode(preorder[i]);
+                  st.push(subRoot->left);
+              }
+              else {
+                  while (!st.empty() && st.top()->val == inorder[j]) {
+                      subRoot = st.top();
+                      st.pop();
+                      ++j;
+                  }
+                  subRoot->right = new TreeNode(preorder[i]);
+                  st.push(subRoot->right);
+              }
+          }
+          return root;
+      }
+  };
