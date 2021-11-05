@@ -1,0 +1,33 @@
+using stack to simulate queue
+
+  1. create 2 auxilliary stack, s1 is to store enqueue elements, s2 is to store dequeue elements;
+  2. only if s2.empty(), we could do s2.push(s1.top()); s1.pop(); return s2.top();
+  
+  
+  class CQueue{
+  public:
+      CQueue(){}
+
+      void appendTail(int value){
+          s1.push(value);
+      }
+
+      int deleteHead(){
+          if(s2.empty()){
+             while(!s1.empty()){
+                 s2.push(s1.top());
+                 s1.pop();
+             }
+          }
+          if(!s2.empty()){
+              int tmp = s2.top();
+              s2.pop();
+              return tmp;
+          }
+          return -1;
+      }
+
+  public:
+      stack<int> s1;  //help store the enqueue elements
+      stack<int> s2;  //help store the dequeue elements
+  };
