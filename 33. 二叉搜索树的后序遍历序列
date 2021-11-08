@@ -1,0 +1,29 @@
+traverse the vector, find the delimiter of left-tree and right-tree
+
+  1. we do traverse from the first index to the last index, until we find the delimiter of left-child and right-child;
+  2. we record the delimiters until we finish this layer of traversing;
+  3. we continue traversing in the left-child and the right-child until we finish traversing the while tree child-by-child;
+
+
+  class Solution {
+  public:
+      bool verifyPostorder(vector<int>& postorder) {
+          return dfs(postorder, 0, postorder.size() - 1);
+      }
+
+  private:
+      bool dfs(vector<int>& vec, int startIdx, int endIdx) {
+          if (startIdx >= endIdx) {
+              return true;
+          }
+          int tmp = startIdx;
+          while (vec[tmp] < vec[endIdx]) {
+              ++tmp;
+          }
+          int rightNodeIdx = tmp;
+          while (vec[tmp] > vec[endIdx]) {
+              ++tmp;
+          }
+          return tmp == endIdx && dfs(vec, startIdx, rightNodeIdx - 1) && dfs(vec, rightNodeIdx, endIdx - 1);
+      }
+  };
