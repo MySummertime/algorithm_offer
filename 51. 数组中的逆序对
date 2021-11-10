@@ -1,4 +1,4 @@
-use an auxiliary vector to help merge elements in the process of traversing
+use an auxiliary vector, double pointers, and merge-sort algorithm
 
   1. we use a vector sized the same as the given vector to help merge elements;
   2. we continue seperating the whole given vector into two parts until it couldn't be seperated;
