@@ -1,1 +1,49 @@
+use an auxiliary vector to help merge elements in the process of traversing
 
+  1. we use a vector sized the same as the given vector to help merge elements;
+  2. we continue seperating the whole given vector into two parts until it couldn't be seperated;
+  3. we sort two parts of elements and then merge them by place them into the auxiliary vector;
+  4. once we find a reverse pair, we record it by recording the count of reverse pair;
+  5. we return the value_count which is actually the amount of reverse pair;
+
+
+
+  class Solution {
+  public:
+      int reversePairs(vector<int>& nums) {
+          vector<int> tmp(nums.size());
+          return mergeSort(0, nums.size() - 1, nums, tmp);
+      }
+
+  private:
+      int mergeSort(int _l, int _r, vector<int>& nums, vector<int>& tmp) {
+          if (_l >= _r) {
+              return 0;
+          }
+          int mid = (_l + _r) >> 1;
+          int cnt = mergeSort(_l, mid, nums, tmp) + mergeSort(mid + 1, _r, nums, tmp);
+          int i = _l; int j = mid + 1; 
+          int idx = _l;
+          while (i <= mid && j <= _r) {
+              if (nums[i] <= nums[j]) {
+                  tmp[idx] = nums[i];
+                  ++i;
+                  cnt += (j - (mid + 1));
+              }
+              else {
+                  tmp[idx] = nums[j];
+                  ++j;
+              }
+              ++idx;
+          }
+          for (int k = i; k <= mid; ++k) {
+              tmp[idx++] = nums[k];
+              cnt += (j - (mid + 1));
+          }
+          for (int k = j; k <= _r; ++k) {
+              tmp[idx++] = nums[k];
+          }
+          std::copy(tmp.begin() + _l, tmp.begin() + _r + 1, nums.begin() + _l);
+          return cnt;
+      }
+  };
