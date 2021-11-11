@@ -1,1 +1,67 @@
+just don't traverse directly, the time cost is horrible
 
+
+  1. binary search
+  
+  /**
+   * Your MedianFinder object will be instantiated and called as such:
+   * MedianFinder* obj = new MedianFinder();
+   * obj->addNum(num);
+   * double param_2 = obj->findMedian();
+   */
+  class MedianFinder {
+  public:
+      vector<int> vec;
+
+  public:
+      MedianFinder() {}
+
+      void addNum(int num) {
+          if (vec.empty()) {
+              vec.push_back(num);
+          }
+          else {
+              vec.insert(lower_bound(vec.begin(), vec.end(), num), num);  //insert(position, value);
+          }
+      }
+
+      double findMedian() {
+          int len = vec.size();
+          return len & 1 ? vec[len >> 1] : (vec[(len >> 1) - 1] + vec[len >> 1]) * 0.5;
+      }
+  };
+  
+  
+  2. use big-end heap & small-end heap simulated by priority_queue
+  
+  /**
+   * Your MedianFinder object will be instantiated and called as such:
+   * MedianFinder* obj = new MedianFinder();
+   * obj->addNum(num);
+   * double param_2 = obj->findMedian();
+   */
+  class MedianFinder {
+  public:
+      priority_queue<int, vector<int>, less<int>> maxq;
+      priority_queue<int, vector<int>, greater<int>>  minq;
+
+  public:
+      MedianFinder() {}
+
+      void addNum(int num) {  //keep maxq.size() < minq.size()
+          if (maxq.size() == minq.size()) {
+              maxq.push(num);
+              minq.push(maxq.top());
+              maxq.pop();
+          }
+          else {
+              minq.push(num);
+              maxq.push(minq.top());
+              minq.pop();
+          }
+      }
+
+      double findMedian() {
+          return maxq.size() == minq.size() ? (maxq.top() + minq.top()) * 0.5 : minq.top();
+      }
+  };
