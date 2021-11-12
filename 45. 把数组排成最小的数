@@ -1,0 +1,39 @@
+use quick sort algorithm
+
+
+
+  class Solution {
+  public:
+      string minNumber(vector<int>& nums) {
+          vector<string> vec;
+          for (auto i : nums) {
+              vec.push_back(to_string(i));
+          }
+          sortFunc(vec, 0, vec.size() - 1);
+          std::string ans;
+          for (auto i : vec) {
+              ans.append(i);
+          }
+          return ans;
+      }
+
+  private:
+      void sortFunc(vector<string>& vec, int l, int r) {
+          if (l >= r) {
+              return;
+          }
+          int i = l; int j = r;
+          while (i < j) {
+              while (vec[j] + vec[l] >= vec[l] + vec[j] && i < j) {   //find the min from the right end
+                  --j;
+              }
+              while (vec[i] + vec[l] <= vec[l] + vec[i] && i < j) {   //find the max from the left end
+                  ++i;
+              }
+              swap(vec[i], vec[j]);   //place the min at the left-hand of the max
+          }
+          swap(vec[i], vec[l]);   //place the min placed at the top of the whole string
+          sortFunc(vec, l, i - 1);
+          sortFunc(vec, i + 1, r);
+      }
+  };
