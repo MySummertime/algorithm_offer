@@ -1,0 +1,39 @@
+use an auxiliary queue
+
+  1. we traverse the tree by bfs algorithm;
+  2. we use auxiliary queue to store nodes while we traverse the tree;
+
+
+  /**
+   * Definition for a binary tree node.
+  */
+  struct TreeNode {
+      int val;
+      TreeNode *left;
+      TreeNode *right;
+      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+  };
+
+  class Solution {
+  public:
+      vector<int> levelOrder(TreeNode* root) {
+          std::vector<int> ans;
+          if (!root) {
+              return ans;
+          }
+          std::queue<TreeNode*> que;  //auxiliary queue
+          que.push(root);
+          while (!que.empty()) {
+              TreeNode* tmp = que.front();
+              que.pop();
+              ans.push_back(tmp->val);
+              if (tmp->left) {
+                  que.push(tmp->left);
+              }
+              if (tmp->right) {
+                  que.push(tmp->right);
+              }
+          }
+          return ans;
+      }
+  };
