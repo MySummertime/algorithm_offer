@@ -1,0 +1,31 @@
+use dfs algorithm & recursion method
+
+
+  class Solution {
+  public:
+      bool exist(vector<vector<char>>& board, string word) {
+          for (int i = 0; i < board.size(); ++i) {
+              for (int j = 0; j < board[i].size(); ++j) {
+                  if (dfs(board, word, i, j, 0)) {
+                      return true;
+                  }
+              }
+          }
+          return false;
+      }
+
+  private:
+      bool dfs(vector<vector<char>>& vec, string word, int i, int j, int idx) {
+          if (i >= vec.size() || i < 0 || j >= vec[0].size() || j < 0 || vec[i][j] != word[idx]) {
+              return false;
+          }
+          if (idx == word.size() - 1) {
+              return true;
+          }
+          vec[i][j] = '.';
+          bool ans = dfs(vec, word, i + 1, j, idx + 1) || dfs(vec, word, i - 1, j, idx + 1) ||
+              dfs(vec, word, i, j + 1, idx + 1) || dfs(vec, word, i, j - 1, idx + 1);
+          vec[i][j] = word[idx];
+          return ans;
+      }
+  };
