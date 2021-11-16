@@ -1,0 +1,53 @@
+use an auxiliary queue, traverse the matrix only by going right & down
+
+  1. taverse the matrix one by one, but only go right/down;
+  2. simplify the traversion by cut four directions to two;
+
+
+  class Solution {
+  public:
+      int movingCount(int m, int n, int k) {
+          if (!k) {
+              return 1;
+          }
+          vector<vector<int>> vis(m, vector<int>(n, 0));
+          std::queue<std::pair<int, int>> que;
+
+          vis[0][0] = 1;
+          que.push(make_pair(0, 0));
+
+          int px[2] = {1, 0};
+          int py[2] = {0, 1};
+
+          int ans = 1;
+          while (!que.empty()) {
+              auto [x, y] = que.front();
+              que.pop();
+              for (int i = 0; i < 2; ++i) {
+                  int tmpx = x + px[i];
+                  int tmpy = y + py[i];
+                  if (tmpx < 0 || tmpx >= m || tmpy < 0 || tmpy >= n || 
+                      vis[tmpx][tmpy] || (func(tmpx) + func(tmpy) > k)) {
+                      continue;
+                  }
+                  vis[tmpx][tmpy] = 1;
+                  que.push(make_pair(tmpx, tmpy));
+                  ++ans;
+              }
+          }
+          return ans;
+      }
+
+  private:
+      int func(int n) {
+          if (!n) {
+              return 0;
+          }
+          int ans = 0;
+          while (n != 0) {
+              ans += (n % 10);
+              n /= 10;
+          }
+          return ans;
+      }
+  };
