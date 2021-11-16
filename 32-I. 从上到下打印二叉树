@@ -1,0 +1,27 @@
+use an auxiliary deque
+
+  1. we traverse the tree using bfs algorithm;
+  2. we use collections.deque() to help store each nodes while we do traversing;
+
+  # Definition for a binary tree node.
+  class TreeNode:
+      def __init__(self, x):
+          self.val = x
+          self.left = None
+          self.right = None
+
+  class Solution:
+      def levelOrder(self, root: TreeNode) -> List[int]:
+          if not root:
+              return []
+          que = collections.deque()   #double-end queue
+          ans = []
+          que.append(root)
+          while que:
+              tmp = que.popleft()
+              ans.append(tmp.val)
+              if tmp.left:
+                  que.append(tmp.left)
+              if tmp.right:
+                  que.append(tmp.right)
+          return ans
