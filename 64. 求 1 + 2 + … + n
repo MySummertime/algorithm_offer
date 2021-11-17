@@ -1,0 +1,35 @@
+put the add operation into constructor
+
+
+  class Temp {
+  public:
+      Temp() {
+          ++i;
+          sum += i;
+      }
+      static unsigned int getSum() {
+          return sum;
+      }
+      static void reset() {
+          i = 0;
+          sum = 0;
+      }
+
+  private:
+      static unsigned int i;
+      static unsigned int sum;
+  };
+
+  unsigned int Temp::i = 0;
+  unsigned int Temp::sum = 0;
+
+  class Solution {
+  public:
+      int sumNums(int n) {
+          Temp::reset();
+          Temp* p = new Temp[n];
+          delete[] p;
+          p = nullptr;      
+          return Temp::getSum();
+      }
+  };
