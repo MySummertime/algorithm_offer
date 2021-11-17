@@ -1,0 +1,32 @@
+simply use array, but call proper methods of array
+
+
+
+  /**
+   * Definition for a binary tree node.
+   */
+  function TreeNode(val) {
+      this.val = val;
+      this.left = this.right = null;
+  }
+  /**
+   * @param {TreeNode} root
+   * @return {number[][]}
+   */
+  var levelOrder = function(root) {
+      const ans = [];
+      if (!root) {
+          return ans;
+      }
+      const que = [[root, 0]];
+      while (que.length) {
+          const [tmp, lev] = que.shift();
+          if (!ans[lev]) {    //initialize every layer
+              ans[lev] = [];
+          }
+          lev & 1 ? ans[lev].unshift(tmp.val) : ans[lev].push(tmp.val);
+          tmp.left && que.push([tmp.left, lev + 1]);
+          tmp.right && que.push([tmp.right, lev + 1]);
+      }
+      return ans;
+  };
