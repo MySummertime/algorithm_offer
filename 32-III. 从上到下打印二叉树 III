@@ -1,0 +1,57 @@
+use a deque, traverse the tree differently in odd layer & even layer
+
+
+
+  /**
+   * Definition for a binary tree node.
+   */
+  struct TreeNode {
+      int val;
+      TreeNode *left;
+      TreeNode *right;
+      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+  };
+
+  class Solution {
+  public:
+      vector<vector<int>> levelOrder(TreeNode* root) {
+          std::vector<vector<int>> ans;
+          if (!root) {
+              return ans;
+          }
+          std::deque<TreeNode*> deq;
+          deq.push_back(root); //odd layer
+          bool flag = 1;
+          while (!deq.empty()) {
+              int len = deq.size();
+              TreeNode* tmp;
+              std::vector<int> vec;
+              while (len--) {
+                  if (flag) { //odd layer
+                      tmp = deq.front();
+                      deq.pop_front();
+                      if (tmp->left) {
+                          deq.emplace_back(tmp->left);
+                      }
+                      if (tmp->right) {
+                          deq.emplace_back(tmp->right);
+                      }
+                  }
+                  else {  //even layer
+                      tmp = deq.back();
+                      deq.pop_back();
+                      if (tmp->right) {
+                          deq.emplace_front(tmp->right);
+                      }
+                      if (tmp->left) {
+                          deq.emplace_front(tmp->left);
+                      }
+                  }
+                  vec.emplace_back(tmp->val);
+              }
+              flag = !flag;
+              ans.emplace_back(vec);
+          }
+          return ans;
+      }
+  };
