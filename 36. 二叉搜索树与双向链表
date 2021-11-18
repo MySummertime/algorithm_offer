@@ -1,0 +1,65 @@
+use non-recursion method, simply traversion
+
+
+  class Node {
+  public:
+      int val;
+      Node* left;
+      Node* right;
+  public:
+      Node() {}
+      Node(int _val) {
+          val = _val;
+          left = NULL;
+          right = NULL;
+      }
+      Node(int _val, Node* _left, Node* _right) {
+          val = _val;
+          left = _left;
+          right = _right;
+      }
+  };
+  class Solution {
+  public:
+      Node* treeToDoublyList(Node* root) {
+          if (!root) {
+              return root;
+          }
+          Node* head = nullptr;
+          Node* pre = nullptr;
+          Node* cur = root;
+          while (cur) {
+              if (!cur->left) {
+                  if (!pre) {
+                      head = cur;
+                  }
+                  else {
+                      pre->right = cur;
+                  }
+                  cur->left = pre;
+                  pre = cur;
+                  cur = cur->right;
+              }
+              else {
+                  Node* preTree = cur->left;
+                  while (preTree->right && preTree->right != cur) {
+                      preTree = preTree->right;
+                  }
+                  if (!preTree->right) {
+                      preTree->right = cur;
+                      cur = cur->left;
+                  }
+                  else {
+                      preTree->right = nullptr;
+                      pre->right = cur;
+                      cur->left = pre;
+                      pre = cur;
+                      cur = cur->right;
+                  }
+              }
+          }
+          head->left = pre;
+          pre->right = head;
+          return head;
+      }
+  };
