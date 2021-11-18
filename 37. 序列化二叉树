@@ -1,0 +1,103 @@
+std::string is different from std::char by terminating at '\0'
+
+  1. the serialization is simple, just traverse the tree, and use to_string() to help transfrom, and be careful about delimiters;
+  2. the deserialization is simple in other language 
+  e.g. 
+    in Java, we could use splice() to cut a string by specific delimiters;
+    in C++, if we need to cut a string into substring by specific delimiters, we could manully create a specific function to finish it;
+
+
+  /**
+   * Definition for a binary tree node.
+   */
+   
+  struct TreeNode {
+      int val;
+      TreeNode *left;
+      TreeNode *right;
+      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+  };
+  
+  // Your Codec object will be instantiated and called as such:
+  // Codec codec;
+  // codec.deserialize(codec.serialize(root));
+  
+  class Codec {
+  public:
+      string serialize(TreeNode* root) {
+          std::string str = "";
+          std::queue<TreeNode*> que;
+          que.push(root);
+          while (!que.empty()) {
+              TreeNode* cur = que.front();
+              if (cur) {
+                  que.push(cur->left);
+                  que.push(cur->right);
+              }
+              que.pop();
+              if (!cur) {
+                  str.append("null");
+              }
+              else {
+                  str.append(to_string(cur->val));
+              }
+              str.append(",");
+          }
+          return str;
+      }
+
+      void strToNode(queue<string>& _que, const string& _str) {
+          int start = 0;
+          for (int i = 0; i < _str.size(); ++i) {
+              if (_str[i] == ',') {
+                  _que.emplace(_str.substr(start, i - start));
+                  start = i + 1;
+              }
+          }
+      }
+
+      TreeNode* construct(queue<string>& _que) {
+          TreeNode* root = nullptr;
+          queue<TreeNode*> que;
+          string head = _que.front();
+          if (head != "null") {
+              root = new TreeNode(atol(head.c_str()));
+              que.push(root);
+          }
+          _que.pop();
+
+          int len;
+          while (!_que.empty()) {
+              len = que.size();
+              for (int i = 0; i < len; ++i) {
+                  TreeNode* cur = que.front();
+                  que.pop();
+                  string lstr = _que.front();
+                  _que.pop();
+                  string rstr = _que.front();
+                  _que.pop();
+                  if (lstr != "null") {
+                      TreeNode* lnode = new TreeNode(stoi(lstr));
+                      que.push(lnode);
+                      cur->left = lnode;
+                  }
+                  if (rstr != "null") {
+                      TreeNode* rnode = new TreeNode(stoi(rstr));
+                      que.push(rnode);
+                      cur->right = rnode;
+                  }
+              }
+          }
+          return root;
+      }
+
+      TreeNode* deserialize(string data) {
+          queue<string> que;
+          strToNode(que, data);
+          return construct(que);
+      }
+
+  private:
+      const int INF = -2000;
+      TreeNode* dum = new TreeNode(INF);
+  };
