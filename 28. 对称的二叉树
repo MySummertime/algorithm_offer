@@ -1,5 +1,6 @@
 using DFS recursion to traverse both tree
 
+
   1. there's 3 ways to determine whether 2 tree is definitely same
     1. a == nullptr && b == nullptr, so that a == b;
     2. a == nullptr && b != nullptr, so that a != b, or
