@@ -1,0 +1,71 @@
+use retrace algorithm or recurse algorithm, both are useful
+
+
+
+  1. retrace algorithm, time is greater than recuese algorithm;
+
+  class Solution {
+  public:
+      vector<string> permutation(string s) {
+          vis.resize(s.size());
+          sort(s.begin(), s.end());
+          std::string perm;
+          retrace(s, 0, s.size(), perm);
+          return ans;
+      }
+
+  private:
+      void retrace(const string& _str, int l, int r, string& _perm) {
+          if (l == r) {
+              ans.push_back(_perm);
+              return;
+          }
+          for (int i = 0; i < r; ++i) {
+              //duplicated
+              if (vis[i] || (i > 0 && (!vis[i - 1]) && _str[i - 1] == _str[i])) {
+                  continue;
+              }
+              //nonduplicated
+              _perm.push_back(_str[i]);
+              vis[i] = 1;
+              retrace(_str, l + 1, r, _perm);
+              _perm.pop_back();
+              vis[i] = 0;
+          }
+      }
+  private:
+      vector<string> ans;
+      vector<bool> vis;
+  };
+  
+  
+  
+  2. recurse algorithm, which costs much more time;
+  
+  class Solution{
+  public:
+      vector<string> permutation(string s) {
+          dfs(s, 0);
+          return ans;
+      }
+
+      void dfs(string _str, int _l) {
+          if (_l == _str.size() - 1) {
+              ans.emplace_back(_str);
+              return;
+          }
+          std::set<int> st;
+          for (int i = _l; i < _str.size(); ++i) {
+              if (st.find(_str[i]) != st.end()) {
+                  continue;
+              }
+              st.insert(_str[i]);
+              swap(_str[i], _str[_l]);
+              dfs(_str, _l + 1);
+              swap(_str[i], _str[_l]);
+          }
+      }
+
+  private:
+      vector<string> ans;
+  };
