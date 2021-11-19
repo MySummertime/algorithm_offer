@@ -1,6 +1,8 @@
-use an static array to change the direction of traversion
+simulate the whole process directly, or use finite-state machine
 
 
+
+  1. simulate sirectly
 
   class Solution {
   public:
@@ -32,4 +34,82 @@ use an static array to change the direction of traversion
 
   private:
       static constexpr int dir[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+  };
+
+
+  2. use finite-state machine
+
+  class Solution {
+  public:
+      vector<int> spiralOrder(vector<vector<int>>& matrix) {
+          if (!matrix.size() || (!matrix[0].size())) {
+              return {};
+          }
+          vector<int> ans;
+          int state = 1;  //initialize the state
+          return fsm(matrix, ans, state);
+      }
+  public:
+      vector<int> fsm(vector<vector<int>>& _matrix, vector<int>& _ans, int _state) {
+          int rows_cnt = _matrix.size();
+          int cols_cnt = _matrix[0].size();
+          int r = 0;  int c = 0;
+          while (true) {
+              switch (_state) {
+                  case 1:
+                      while (c < cols_cnt) {
+                          _ans.emplace_back(_matrix[r][c]);
+                          ++c;
+                      }
+                      --c;
+                      ++r;
+                      --cols_cnt;
+                      _state = 2;
+                      break;
+                  case 2:
+                      while (r < rows_cnt) {
+                          _ans.emplace_back(_matrix[r][c]);
+                          ++r;
+                      }
+                      --r;
+                      --c;
+                      --rows_cnt;
+                      _state = 3;
+                      break;
+                  case 3:
+                      while (c > c_flag) {
+                          _ans.emplace_back(_matrix[r][c]);
+                          --c;
+                      }
+                      ++c;
+                      --r;
+                      ++c_flag;
+                      _state = 4;
+                      break;
+                  case 4:
+                      while (r > r_flag) {
+                          _ans.emplace_back(_matrix[r][c]);
+                          --r;
+                      }
+                      ++r;
+                      ++c;
+                      ++r_flag;
+                      _state = 1;
+                      break;
+                  default:
+                      return {};
+                  }
+              if ((_state == 2 || _state == 4) && c_flag >= cols_cnt) {
+                  break;
+              }
+              if ((_state == 1 || _state == 3) && r_flag >= rows_cnt) {
+                  break;
+              }
+          }
+          return _ans;
+      }
+
+  private:
+      int r_flag = 0;
+      int c_flag = -1;
   };
