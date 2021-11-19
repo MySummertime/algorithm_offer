@@ -1,0 +1,35 @@
+use an static array to change the direction of traversion
+
+
+
+  class Solution {
+  public:
+      vector<int> spiralOrder(vector<vector<int>>& matrix) {
+          if (!matrix.size() || (!matrix[0].size())) {
+              return {};
+          }
+          int cnt = matrix.size() * matrix[0].size();
+          vector<int> ans(cnt);
+          vector<vector<bool>> vis(matrix.size(), vector<bool>(matrix[0].size()));
+          int r = 0;  int c = 0;  int d = 0;
+          int nextR = 0;  int nextC = 0;
+          for (int i = 0; i < cnt; ++i) {
+              ans[i] = matrix[r][c];
+              vis[r][c] = 1;
+              nextR = r + dir[d][0];
+              nextC = c + dir[d][1];
+              if (nextR < 0 || nextR >= matrix.size() ||
+                  nextC < 0 || nextC >= matrix[0].size() ||
+                  vis[nextR][nextC]) {
+                  ++d;
+                  d %= 4;
+              }
+              r += dir[d][0];
+              c += dir[d][1];
+          }
+          return ans;
+      }
+
+  private:
+      static constexpr int dir[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+  };
