@@ -1,0 +1,22 @@
+derive the recursive formula is the key
+
+
+  class Solution {
+  public:
+      vector<int> constructArr(vector<int>& a) {
+          if (!a.size()) {
+              return a;
+          }
+          vector<int> ans(a.size());
+          ans[0] = 1;
+          for (int i = 1; i < a.size(); ++i) {
+              ans[i] = ans[i - 1] * a[i - 1];
+          }
+          int tmp = 1;
+          for (int i = a.size() - 1; i >= 0; --i) {
+              ans[i] *= tmp;
+              tmp *= a[i];
+          }
+          return ans;
+      }
+  };
