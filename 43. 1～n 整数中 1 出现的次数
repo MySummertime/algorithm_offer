@@ -1,0 +1,15 @@
+derive the recurrence formula is the key
+
+
+  class Solution {
+  public:
+      int countDigitOne(int n) {
+          long long base = 1;
+          int ans = 0;
+          for (int k = 0; n >= base; ++k) {
+              ans += (n / (base * 10)) * base + min(max(n % (base * 10) - base + 1, 0LL), base);
+              base *= 10;
+          }
+          return ans;
+      }
+  };
