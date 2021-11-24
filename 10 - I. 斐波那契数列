@@ -1,0 +1,23 @@
+use dp method, save time by recording the sub-situation
+
+
+  class Solution {
+  public:
+      int fib(int n) {
+          if (n == 0) {
+              return 0;
+          }
+          int ans[len];
+          ans[0] = 0;
+          ans[1] = 1;
+          for (int i = 2; i <= n; ++i) {
+              ans[i] = ans[i - 1] + ans[i - 2];
+              ans[i] %= base;
+          }
+          return ans[n];
+      }
+
+  private:
+      const int base = int(1000000007);
+      const int len = 101;
+  };
