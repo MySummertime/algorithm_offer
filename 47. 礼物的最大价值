@@ -1,8 +1,8 @@
 use dp method
 
 
-  1. use a sliding array, instead of creating a new array which has the same size of the original array, to optimize the space cost;
-  2. traverse the matrix from left-up to right-down;
+  1. use a one-dimension sliding array, instead of creating a double-dimension array which has the same size of the original matrix, to optimize the space cost;
+  2. traverse the original matrix from left-up to right-down;
   
   class Solution {
   public:
