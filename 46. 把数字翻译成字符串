@@ -23,3 +23,28 @@ use dp method
           return ans[len];
       }
   };
+
+
+
+  2. use a single int number, instead of create an array, to optimize the space;
+    1. calculate & record the mod of num, while we dividing num by 10 each time;
+    2. note boundary conditions;
+
+
+  class Solution {
+  public:
+      int translateNum(int num) {
+          int mod0;   int mod1 = num % 10;
+          int val0 = 1;  int val1 = 1;
+          while (num > 9) {
+              num /= 10;
+              mod0 = num % 10;
+              int tmpVal = 10 * mod0 + mod1;
+              int val = (tmpVal >= 10 && tmpVal <= 25) ? val0 + val1 : val1;
+              val0 = val1;
+              val1 = val;
+              mod1 = mod0;
+          }
+          return val1;
+      }
+  };
