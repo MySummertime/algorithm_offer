@@ -1,5 +1,9 @@
 use dp method
 
+  1. use sliding array to optimize the dp;
+  2. use a single int variable, instead of creating a static/dynamic array, could save space significantly;
+  3. note boudary conditions;
+
 
   class Solution {
   public:
