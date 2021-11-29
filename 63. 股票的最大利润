@@ -1,0 +1,20 @@
+use dp method 
+
+  1. the current max profit is max(max profit of all days before, today's profit if we sell out);
+  2. the current min price is min(min price of all days before, today's price);
+  
+  
+  class Solution {
+  public:
+      int maxProfit(vector<int>& prices) {
+          for (int i : prices) {
+              maxPro = std::max(maxPro, i - minPri);
+              minPri = std::min(minPri, i);
+          }
+          return maxPro;
+      }
+
+  private:
+      int minPri = 2147483647;
+      int maxPro = 0;
+  };
