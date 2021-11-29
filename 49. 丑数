@@ -1,0 +1,28 @@
+using dp method
+
+
+  class Solution {
+  public:
+      int nthUglyNumber(int n) {
+          int p2 = 1, p3 = 1, p5 = 1;
+          int tmp2, tmp3, tmp5;
+          vector<int> vec(n + 1);
+          vec[1] = 1;
+          for (int i = 2; i <= n; ++i) {
+              tmp2 = vec[p2] * 2;
+              tmp3 = vec[p3] * 3;
+              tmp5 = vec[p5] * 5;
+              vec[i] = min(min(tmp2, tmp3), tmp5);
+              if (vec[i] == tmp2) {
+                  ++p2;
+              }
+              if (vec[i] == tmp3) {
+                  ++p3;
+              }
+              if (vec[i] == tmp5) {
+                  ++p5;
+              }
+          }
+          return vec[n];
+      }
+  };
