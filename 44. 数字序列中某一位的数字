@@ -1,1 +1,30 @@
+use 3 auxiliary variables
 
+
+  1. variable_digit: record the amount of single digits within an int number;
+  2. variable_start: record the first single digit of an int number;
+  3. variable_index: record the exact index of n within sequence [0, n];
+  
+  class Solution {
+  public:
+      int findNthDigit(int n) {
+          if (!n) {
+              return 0;
+          }
+          while (n > index) {
+              n -= index;
+              start *= 10;
+              ++digit;
+              index = start * digit * 9;
+          }
+          long tmp = start + (n - 1) / digit;
+          int mod = (n - 1) % digit;
+          std::string str = to_string(tmp);
+          return str[mod] - '0';
+      }
+
+  private:
+      int digit = 1;
+      long start = 1;
+      long index = start * digit * 9;
+  };
